@@ -71,7 +71,32 @@
 #include <iostream>
 using namespace std;
 
+
+
 class Solution {
+// √ Accepted
+//   √ 113/113 cases passed (4 ms)
+//   √ Your runtime beats 93.43 % of cpp submissions
+//   √ Your memory usage beats 54.28 % of cpp submissions (8.7 MB)
+public:
+    int removeElement(vector<int>& nums, int val) {
+        int idx = 0;
+        for (int i = 0; i < nums.size(); i++){
+            if (nums[i] != val){
+                nums[idx] = nums[i];
+                idx++;
+            }
+        }
+        return idx;
+    }
+};
+
+
+class Solution1 {
+// √ Accepted
+//   √ 113/113 cases passed (4 ms)
+//   √ Your runtime beats 93.43 % of cpp submissions
+//   √ Your memory usage beats 53.88 % of cpp submissions (8.8 MB)
 public:
     int removeElement(vector<int>& nums, int val) {
         if(nums.empty()){
