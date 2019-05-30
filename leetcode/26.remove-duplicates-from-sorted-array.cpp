@@ -71,7 +71,7 @@
 using namespace std;
 
 
-class Solution3 {
+class Solution {
 // 发现条件：已经排好顺序的
 // 20 ms
 public:
@@ -195,10 +195,10 @@ public:
     }
 };
 
-int main(){
-    vector<int> nums = {1,1,2};
-    cout << Solution().removeDuplicates(nums) << endl;
-    return 0;
-}
+// int main(){
+//     vector<int> nums = {1,1,2};
+//     cout << Solution().removeDuplicates(nums) << endl;
+//     return 0;
+// }
 
 
