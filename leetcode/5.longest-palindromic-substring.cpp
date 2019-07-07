@@ -39,9 +39,60 @@
 #include <cstring>
 using namespace std;
 
+// TODO: 还有其他解法可以尝试，看看leetcode的solution
+
+class Solution1 {
+// dp 解法
+public:
+    string longestPalindrome(string s) {
+        int length = s.size();
+        if (length <= 1){
+            return s;
+        }
+        if (length == 2){
+            if (s[0] == s[1]){
+                return s;
+            }
+            else {
+                return s.substr(0,1);
+            }
+        }
+        // 被没有清零害惨了！！
+        int dp[1001][1001] = {0};
+        memset(dp, sizeof(dp), 0);
+        int maxlen = 0;
+        int max_l_index = 0;
+        for (int i = 0; i < length; i++){
+            dp[i][i] = 1;
+        }
+        for (int i = 0; i < length-1; i++){
+            if (s[i] == s[i+1]){
+                dp[i][i+1] = 1;
+            }
+        }
+        // 填充dp表，按斜线填充
+        for (int i = 0; i < length-2; i++){
+            for (int j = 0; j < length-2-i; j++){
+                if (s[j] == s[j+2+i]){
+                    dp[j][j+2+i] = dp[j+1][j+1+i];
+                }
+            }
+        }
+        // 遍历dp表，寻找为1且长度最长的
+        for (int i = 0; i < length; i++){
+            for (int j = length-1; j >= i; j--){
+                if (dp[i][j] && (j-i+1 > maxlen)){
+                    maxlen = j-i+1;
+                    max_l_index = i;
+                }
+            }
+        }
+        return s.substr((size_t)max_l_index, (size_t)maxlen);
+    }
+};
 
 class Solution {
-// dp 解法
+// 这个将找最大放在dp里面实现，会快一些。
 public:
     string longestPalindrome(string s) {
         int len = s.size();
@@ -56,9 +107,9 @@ public:
                 return s.substr(0,1);
             }
         }   
-        int dp[1001][1001];
+        int dp[1001][1001] = {0};
         memset(dp, sizeof(dp), 0);
-        int maxlen = 0;
+        int maxlen = 1;
         int max_l_index = 0;
         for (int i = 0; i < len; i++){
             dp[i][i] = 1;
@@ -66,38 +117,24 @@ public:
         for (int i = 0; i < len-1; i++){
             if (s[i] == s[i+1]){
                 dp[i][i+1] = 1;
+                maxlen = 2;
+                max_l_index = i;
             }
         }
-        // 填充dp表，按斜线填充
         for (int i = 0; i < len-2; i++){
             for (int j = 0; j < len-2-i; j++){
                 if (s[j] == s[j+2+i]){
                     dp[j][j+2+i] = dp[j+1][j+1+i];
+                    if (dp[j][j+2+i] && 2+i+1 > maxlen){
+                        maxlen = 2+i+1;
+                        max_l_index = j;
+                    }
                 }
             }
-        }
-        // 遍历dp表，寻找为1且长度最长的
-        for (int i = 0; i < len; i++){
-            for (int j = len-1; j >= i; j--){
-                if (dp[i][j] && j-i+1 > maxlen){
-                    maxlen = j-i+1;
-                    max_l_index = i;
-                }
-            }
-        }
-        cout << max_l_index;
-        cout << maxlen;
-        cout << endl;
-        for (int i = 0 ; i < len; i++){
-            for (int j = 0; j < len; j++){
-                cout << " " << dp[i][j];
-            }
-            cout << endl;
         }
         return s.substr((size_t)max_l_index, (size_t)maxlen);
     }
 };
-
 
 // class Solution {
 // // 这种解法做不出来
