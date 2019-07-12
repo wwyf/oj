@@ -40,6 +40,7 @@
 using namespace std;
 
 class Solution {
+// 有点简单？？
 public:
     vector<string> letterCombinations(string digits) {
         vector<string> mapper[10];
