@@ -40,7 +40,13 @@
 using namespace std;
 
 class Solution {
-// 有点简单？？
+// 有点简单？？ 
+/*
+√ Accepted
+  √ 25/25 cases passed (0 ms)
+  √ Your runtime beats 100 % of cpp submissions
+  √ Your memory usage beats 66.44 % of cpp submissions (8.5 MB)
+   */
 public:
     vector<string> letterCombinations(string digits) {
         vector<string> mapper[10];
@@ -78,4 +84,6 @@ public:
         return ans;
     }
 };
+
+// 官网上还有一种使用递归的写法，感觉没什么好写的就算了
 
