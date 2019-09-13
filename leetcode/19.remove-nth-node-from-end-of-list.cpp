@@ -48,7 +48,7 @@ struct ListNode {
     ListNode *next;
     ListNode(int x) : val(x), next(NULL) {}
 };
-class Solution {
+class Solution2 {
 public:
     ListNode* removeNthFromEnd(ListNode* head, int n) {
         if (head == NULL){
@@ -77,7 +77,7 @@ public:
         return head;
     }
 };
-
+/* 4ms */
 class Solution {
     public:
     ListNode * removeNthFromEnd(ListNode* head, int n){
