@@ -44,6 +44,12 @@
 /*
 很简单的深搜吧，深搜填一下格子就好。
 */
+/*
+√ Accepted
+  √ 47/47 cases passed (12 ms)
+  √ Your runtime beats 91.93 % of cpp submissions
+  √ Your memory usage beats 43.82 % of cpp submissions (11 MB)
+*/
 class Solution {
 public:
     int hlen;
