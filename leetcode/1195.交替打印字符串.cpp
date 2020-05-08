@@ -9,56 +9,59 @@
 // @lc code=start
 class FizzBuzz {
 private:
-	int n;
-	mutex a, b, c, d;
-
+    int n;
+atomic<int> i;
 public:
-	FizzBuzz(int n) {
-		this->n = n;
-		b.lock();
-		c.lock();
-		d.lock();
-	}
-
-	// printFizz() outputs "fizz".
-	void fizz(function<void()> printFizz) {
-		for (int i = 1; i <= n; ++i)
-		{
-			a.lock();
-			if (i % 3 == 0&&i % 15!=0)printFizz();
-			b.unlock();
-		}
-	}
-
-	// printBuzz() outputs "buzz".
-	void buzz(function<void()> printBuzz) {
-		for (int i = 1; i <=n; ++i)
-		{
-			b.lock();
-			if (i % 5 == 0&&i%15!=0)printBuzz();
-			c.unlock();
-		}
-	}
-
-	// printFizzBuzz() outputs "fizzbuzz".
-	void fizzbuzz(function<void()> printFizzBuzz) {
-		for (int i = 1; i <= n; ++i)
-		{
-			c.lock();
-			if (i % 15==0)printFizzBuzz();
-			d.unlock();
-		}
+    FizzBuzz(int n) {
+        this->n = n;
+        i.store(1);
     }
-	// printNumber(x) outputs "x", where x is an integer.
-	void number(function<void(int)> printNumber) {
-		for (int i = 1; i <= n; ++i)
-		{
-			d.lock();
-			if (i % 3 != 0 && i % 5 != 0)printNumber(i);
-			a.unlock();
-		}
-	}
+
+    // printFizz() outputs "fizz".
+    void fizz(function<void()> printFizz) {
+        while(i.load(memory_order_acquire)<=n){
+            if(i%3==0 && i%5!=0){
+                printFizz();
+                ++i;
+            }else this_thread::yield();
+        }
+    }
+
+    // printBuzz() outputs "buzz".
+    void buzz(function<void()> printBuzz) {
+       while(i.load(memory_order_acquire)<=n){
+            if(i%3!=0 && i%5==0){
+                printBuzz();
+                ++i;
+            }else
+             this_thread::yield();
+        }
+    }
+
+    // printFizzBuzz() outputs "fizzbuzz".
+	void fizzbuzz(function<void()> printFizzBuzz) {
+       while(i.load(memory_order_acquire)<=n){
+            if(i%3==0 && i%5==0){
+                printFizzBuzz();
+                ++i;
+            } else
+            this_thread::yield();
+        }
+    }
+
+    // printNumber(x) outputs "x", where x is an integer.
+    void number(function<void(int)> printNumber) {
+       while(i.load(memory_order_acquire)<=n){
+            if(i%3!=0 && i%5!=0){
+                printNumber(i);
+                ++i;
+            }
+            else
+            this_thread::yield();
+        }
+    }
 };
+
 // @lc code=end
 
 int main(int argc, char** argv){
