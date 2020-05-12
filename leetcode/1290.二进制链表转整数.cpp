@@ -8,6 +8,12 @@
 /*
 很简单了。
 主要是考察进制之间的转换，这里的话则就是在从高位向低位遍历的过程里如何转换进制需要想一想。
+
+Accepted
+102/102 cases passed (0 ms)
+Your runtime beats 100 % of cpp submissions
+Your memory usage beats 100 % of cpp submissions (8.2 MB)
+
 */
 
 // @lc code=start
