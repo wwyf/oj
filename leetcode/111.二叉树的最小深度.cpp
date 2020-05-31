@@ -9,6 +9,13 @@
 1. 递归、dfs、分解小问题（该树的最小深度=min(左树的最小深度, 右树的最小深度)+1）
 2. bfs，一旦发现叶子结点马上返回深度(选择这种方法！)
 
+```
+Accepted
+41/41 cases passed (16 ms)
+Your runtime beats 57.37 % of cpp submissions
+Your memory usage beats 100 % of cpp submissions (17.5 MB)
+```
+
 /**
  * Definition for a binary tree node.
  * struct TreeNode {
