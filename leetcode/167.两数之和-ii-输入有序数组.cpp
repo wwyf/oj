@@ -8,6 +8,7 @@
 1. 使用map, 没有用到有序的特性
 2. 二分搜索？可行是可行
 3. 双指针！标答，太强了，用上了有序的特性，时间是O(n)， 空间是O(1)
+关于该算法的证明：https://leetcode-cn.com/problems/two-sum-ii-input-array-is-sorted/solution/yi-zhang-tu-gao-su-ni-on-de-shuang-zhi-zhen-jie-fa/
 ```
 17/17 cases passed (16 ms)
 Your runtime beats 20.68 % of cpp submissions
