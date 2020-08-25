@@ -13,25 +13,26 @@ using namespace std;
 class Solution {
 public:
     string minWindow(string s, string t) {
-        unordered_map<char, int> tmap;
-        unordered_map<char, int> smap;
-        unordered_set<char> tchar;
+        int tmap[256] = {0};
+        int smap[256] = {0};
+        int total_count = 0;
         for (int i = 0; i < t.size(); i++){
+            if (tmap[t[i]] == 0) total_count++;
             tmap[t[i]]++;
-            tchar.insert(t[i]);
         }
         int l = 0, r = 0;
         int ans = INT_MAX;
         int ans_l = 0;
         int ans_r = 0;
+        int count = 0;
         while(l <= r && r < s.size()){
-            while(r < s.size() && !comp(smap, tmap, tchar)){
-                // cout << "!" << l << " " << r << endl;
+            while(r < s.size() && count < total_count){
+                if (smap[s[r]]+1 == tmap[s[r]]) count++;
                 smap[s[r]]++;
                 r++;
             }
-            while(l <= r && comp(smap, tmap, tchar)){
-                // cout << l << " " << r << endl;
+            while(l <= r && count == total_count){
+                if (smap[s[l]] == tmap[s[l]]) count--;
                 if (r-l < ans){
                     ans = r-l;
                     ans_l = l;
@@ -42,16 +43,6 @@ public:
             }
         }
         return s.substr(ans_l, (ans_r-ans_l));
-    }
-    bool comp(unordered_map<char,int> & smap, unordered_map<char,int> & tmap, unordered_set<char> & t){
-        for (auto c : t){
-            // cout << t[i] << " " << smap[t[i]] << " " << tmap[t[i]] << endl;
-            if (smap[c] < tmap[c]){
-            // if (smap[t[i]] < 1){
-                return false;
-            }
-        }
-        return true;
     }
 };
 // @lc code=end
