@@ -49,13 +49,16 @@ struct TreeNode {
 class Solution {
 public:
     bool isValidBST(TreeNode* root) {
+        if (root == NULL){
+            return true;
+        }
         int root_max, root_min;
         return isValidBST(root, &root_max, &root_min);
     }
     bool isValidBST(TreeNode* root, int * maxVal, int * minVal){
-        // 不允许这种情况出现
+        // 不允许在运行中出现这种情况
         if (root == NULL){
-            // assert(0);
+            assert(0);
             return true;
         }
         if (root->left == NULL && root->right == NULL){
@@ -64,7 +67,6 @@ public:
             return true;
         }
         int left_max, left_min;
-        bool left_ok = false;
         int right_max, right_min;
         if (root->left){
             if (!isValidBST(root->left, &left_max, &left_min)){
