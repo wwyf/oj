@@ -6,49 +6,49 @@
 #include <string>
 #include <iostream>
 #include <cctype>
+#include <stack>
 using namespace std;
 // @lc code=start
 class Solution {
 public:
     string decodeString(string s) {
-        return decodeString(1, s);
-
-    }
-    string decodeString(int n, string s){
-        string ans;
-        int i = 0;
-        while(i < s.size()){
-            // cout << s << endl;
-            // cout << i << endl;
-            if (isalpha(s[i])){
-                ans.push_back(s[i]);
-                i++;
-                continue;
-            } else if (isdigit(s[i])){
-                int dn = s[i]-'0';
-                int start_index = i+2;
-                i = i+2;
-                // find next paired "]"
-                int count = 1;
-                while(count!=0){
-                    if (s[i] == '['){
-                        count++;
-                    }else if (s[i] == ']'){
-                        count--;
-                    }
-                    i++;
+        stack<int> ns;
+        stack<string> ss;
+        int pos = 0;
+        while(pos < s.size()){
+            if (isdigit(s[pos])){
+                // push a num into stack ns
+                int num = s[pos]-'0';
+                while(isdigit(s[pos+1])){
+                    num = num*10 + s[pos+1]-'0';
+                    pos++;
                 }
-                int end_index = i-2;
-                string cur = decodeString(dn, s.substr(start_index, (end_index-start_index+1)));
-                ans += cur;
+                ns.push(num);
+            } else if (isalpha(s[pos])){
+                ss.push(string(1, s[pos]));
+            } else if (s[pos] == '['){
+                ss.push(string(1, s[pos]));
+            } else if (s[pos] == ']'){
+                string cur_string;
+                while(ss.top() != "["){
+                    cur_string = ss.top() + cur_string;
+                    ss.pop();
+                }
+                ss.pop();
+                int num = ns.top();
+                ns.pop();
+                string final_string;
+                for (int i = 0; i < num; i++) final_string += cur_string;
+                ss.push(final_string);
             }
-            
+            pos++;
         }
-        string a;
-        for (int i = 0; i < n; i++){
-            a += ans;
+        string ans;
+        while(!ss.empty()){
+            ans = ss.top() + ans;
+            ss.pop();
         }
-        return a;
+        return ans;
     }
 };
 // @lc code=end
