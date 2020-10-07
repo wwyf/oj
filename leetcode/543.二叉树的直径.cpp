@@ -27,22 +27,17 @@ class Solution {
 public:
     int ans = 0;
     int diameterOfBinaryTree(TreeNode* root) {
-        diameterOfBinaryTreeR(root);
+        getDepth(root);
         return ans;
-    }
-    void diameterOfBinaryTreeR(TreeNode* root) {
-        if (root == nullptr){
-            return ;
-        }
-        ans = std::max(ans, getDepth(root->left)+getDepth(root->right));
-        diameterOfBinaryTree(root->left);
-        diameterOfBinaryTree(root->right);
     }
     int getDepth(TreeNode* root){
         if (root == nullptr){
             return 0;
         }
-        return std::max(getDepth(root->left), getDepth(root->right))+1;
+        int left = getDepth(root->left);
+        int right = getDepth(root->right);
+        ans = std::max(ans, left+right);
+        return std::max(left, right)+1;
     }
 };
 // @lc code=end
